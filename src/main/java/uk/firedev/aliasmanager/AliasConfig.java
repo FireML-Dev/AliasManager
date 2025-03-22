@@ -1,9 +1,17 @@
 package uk.firedev.aliasmanager;
 
+import dev.dejvokep.boostedyaml.YamlDocument;
+import dev.dejvokep.boostedyaml.block.implementation.Section;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import uk.firedev.aliasmanager.local.AliasManager;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,25 +19,49 @@ public class AliasConfig {
 
     public static final AliasConfig INSTANCE = new AliasConfig();
 
-    private AliasConfig() {}
+    private final YamlDocument document;
 
-    public FileConfiguration getConfig() {
-        AliasManager.INSTANCE.saveDefaultConfig();
-        return AliasManager.INSTANCE.getConfig();
+    private AliasConfig() {
+        File file = new File(AliasManager.INSTANCE.getDataFolder(), "aliases.yml");
+        try {
+            YamlDocument document;
+            InputStream resource = AliasManager.INSTANCE.getResource("aliases.yml");
+            if (resource == null) {
+                document = YamlDocument.create(file);
+            } else {
+                document = YamlDocument.create(file, resource);
+            }
+            this.document = document;
+        } catch (IOException exception) {
+            AliasManager.INSTANCE.getLogger().severe("Could not load aliases.yml.");
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public YamlDocument getConfig() {
+        return document;
     }
 
     public void reload() {
-        AliasManager.INSTANCE.reloadConfig();
+        try {
+            document.reload();
+        } catch (IOException exception) {
+            AliasManager.INSTANCE.getLogger().warning("Could not reload aliases.yml.");
+        }
     }
 
     public void save() {
-        AliasManager.INSTANCE.saveConfig();
+        try {
+            document.save();
+        } catch (IOException exception) {
+            AliasManager.INSTANCE.getLogger().warning("Could not save aliases.yml.");
+        }
     }
 
     public List<CommandBuilder> getCommandBuilders() {
         List<CommandBuilder> list = new ArrayList<>();
-        getConfig().getKeys(false).forEach(key -> {
-            ConfigurationSection section = getConfig().getConfigurationSection(key);
+        getConfig().getRoutesAsStrings(false).forEach(key -> {
+            Section section = getConfig().getSection(key);
             if (section == null) {
                 return;
             }

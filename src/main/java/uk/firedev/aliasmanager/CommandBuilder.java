@@ -1,5 +1,6 @@
 package uk.firedev.aliasmanager;
 
+import dev.dejvokep.boostedyaml.block.implementation.Section;
 import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.CommandTree;
 import net.kyori.adventure.audience.Audience;
@@ -14,11 +15,8 @@ import uk.firedev.aliasmanager.local.AliasManager;
 import uk.firedev.daisylib.api.message.component.ComponentMessage;
 import uk.firedev.daisylib.api.message.string.StringReplacer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-// TODO add namespace option
 public class CommandBuilder {
 
     public static final List<String> REGISTERED = new ArrayList<>();
@@ -30,9 +28,9 @@ public class CommandBuilder {
     private final List<String> commands;
     private final List<String> messages;
 
-    public CommandBuilder(@NotNull ConfigurationSection section) {
+    public CommandBuilder(@NotNull Section section) {
         this.disabled = section.getBoolean("disabled", false);
-        this.commandName = Objects.requireNonNull(section.getName());
+        this.commandName = Objects.requireNonNull(section.getNameAsString());
         this.aliases = section.getStringList("aliases");
         this.permission = section.getString("permission");
         this.commands = section.getStringList("commands");
@@ -43,7 +41,7 @@ public class CommandBuilder {
         if (commandName == null || disabled) {
             return;
         }
-        new CommandTree(commandName)
+        CommandTree command = new CommandTree(commandName)
             .withAliases(aliases.toArray(String[]::new))
             .withPermission(permission)
             .executes(info -> {
@@ -63,8 +61,6 @@ public class CommandBuilder {
                     }
                     Bukkit.dispatchCommand(thisSender, replacer.replace(executeCommand));
                 });
-            })
-            .register(AliasManager.INSTANCE);
         REGISTERED.add(commandName);
     }
 
