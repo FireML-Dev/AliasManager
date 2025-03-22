@@ -16,7 +16,8 @@ repositories {
 
 dependencies {
     compileOnly(libs.paper.api)
-    compileOnly(libs.daisylib)
+    implementation(libs.commandapi)
+    implementation(libs.daisylib)
 }
 
 group = "uk.firedev"
@@ -27,20 +28,13 @@ java.sourceCompatibility = JavaVersion.VERSION_21
 paper {
     name = project.name
     version = project.version.toString()
-    main = "uk.firedev.plugintemplate.PluginTemplate"
+    main = "uk.firedev.aliasmanager.local.AliasManager"
     apiVersion = "1.21.4"
     author = "FireML"
     description = project.description.toString()
 
-    loader = "uk.firedev.plugintemplate.LibraryLoader"
+    loader = "uk.firedev.aliasmanager.local.LibraryLoader"
     generateLibrariesJson = true
-
-    serverDependencies {
-        register("DaisyLib") {
-            required = true
-            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-        }
-    }
 }
 
 publishing {
@@ -78,6 +72,9 @@ tasks {
         archiveBaseName.set(project.name)
         archiveVersion.set(project.version.toString())
         archiveClassifier.set("")
+
+        relocate("uk.firedev.daisylib.api", "uk.firedev.aliasmanager.libs.daisylib")
+        relocate("dev.jorel.commandapi", "uk.firedev.aliasmanager.libs.commandapi")
     }
     withType<JavaCompile> {
         options.encoding = "UTF-8"

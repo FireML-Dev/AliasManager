@@ -1,0 +1,19 @@
+# The command name
+example:
+  # Should this command be disabled?
+  disabled: true
+  # The permission required to execute this command
+  permission: "example.permission.1"
+  # The aliases for this command
+  aliases:
+    - "ex"
+  # The commands this alias should execute.
+  commands:
+    # Runs the command as a player. This supports the {player} placeholder.
+    - "give {player} diamond 1"
+    # Runs the command as the console. This does not support the {player} placeholder.
+    - "console:say Hello!"
+  # The messages to send to the sender when the command is executed.
+  messages:
+    - "<aqua>You executed the example command!"
+    - "<light_purple>Have a diamond :)"

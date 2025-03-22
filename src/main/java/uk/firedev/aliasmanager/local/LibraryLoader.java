@@ -1,4 +1,4 @@
-package uk.firedev.plugintemplate;
+package uk.firedev.aliasmanager.local;
 
 import com.google.gson.Gson;
 import io.papermc.paper.plugin.loader.PluginClasspathBuilder;
@@ -41,11 +41,17 @@ public class LibraryLoader implements PluginLoader {
 
     private record PluginLibraries(Map<String, String> repositories, List<String> dependencies) {
         public Stream<Dependency> asDependencies() {
+            if (dependencies == null || dependencies.isEmpty()) {
+                return Stream.empty();
+            }
             return dependencies.stream()
                 .map(d -> new Dependency(new DefaultArtifact(d), null));
         }
 
         public Stream<RemoteRepository> asRepositories() {
+            if (repositories == null || repositories.isEmpty()) {
+                return Stream.empty();
+            }
             return repositories.entrySet().stream()
                 .map(e -> new RemoteRepository.Builder(e.getKey(), "default", e.getValue()).build());
         }

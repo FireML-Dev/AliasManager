@@ -1,4 +1,4 @@
-rootProject.name = "PluginTemplate"
+ rootProject.name = "AliasManager"
 
 dependencyResolutionManagement {
     versionCatalogs {
@@ -7,9 +7,10 @@ dependencyResolutionManagement {
             library("paper-api", "io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
 
             // compileOnly dependencies
-            library("daisylib", "uk.firedev:DaisyLib:2.3.0-SNAPSHOT")
 
             // implementation dependencies
+            library("daisylib", "uk.firedev:DaisyLib-API:2.3.1-SNAPSHOT")
+            library("commandapi", "dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.7.0")
 
             // paperLibrary dependencies
 
