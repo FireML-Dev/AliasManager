@@ -41,7 +41,7 @@ public class CommandBuilder {
         if (commandName == null || disabled) {
             return;
         }
-        CommandTree command = new CommandTree(commandName)
+        new CommandTree(commandName)
             .withAliases(aliases.toArray(String[]::new))
             .withPermission(permission)
             .executes(info -> {
@@ -61,6 +61,7 @@ public class CommandBuilder {
                     }
                     Bukkit.dispatchCommand(thisSender, replacer.replace(executeCommand));
                 });
+            }).register(AliasManager.INSTANCE);
         REGISTERED.add(commandName);
     }
 
@@ -70,6 +71,10 @@ public class CommandBuilder {
 
     public List<String> getAliases() {
         return aliases;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
     }
 
 }

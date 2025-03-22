@@ -24,8 +24,7 @@ public class CustomAliases {
         // Unregister any removed aliases
         for (String command : configCommands) {
             if (!CommandBuilder.REGISTERED.contains(command)) {
-                CommandAPI.unregister(command);
-                CommandAPI.unregister("aliasmanager:" + command);
+                unregisterCommand(command);
             }
         }
 
@@ -35,9 +34,19 @@ public class CustomAliases {
             if (name == null || name.isEmpty()) {
                 return;
             }
+            if (builder.isDisabled()) {
+                unregisterCommand(name);
+                return;
+            }
             // Command registration
             builder.registerCommand();
         });
+    }
+
+    private void unregisterCommand(String command) {
+        CommandBuilder.REGISTERED.remove(command);
+        CommandAPI.unregister(command);
+        CommandAPI.unregister("aliasmanager:" + command);
     }
 
 }
