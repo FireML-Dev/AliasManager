@@ -1,6 +1,8 @@
+# NOTE: Removing any commands from this file requires a full server restart.
+
 # The command name
 example:
-  # Should this command be disabled?
+  # Should this command be disabled? Setting this to true requires a full server restart.
   disabled: true
   # The permission required to execute this command
   permission: "example.permission.1"

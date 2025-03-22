@@ -19,8 +19,6 @@ import java.util.*;
 
 public class CommandBuilder {
 
-    public static final List<String> REGISTERED = new ArrayList<>();
-
     private final boolean disabled;
     private final String commandName;
     private final List<String> aliases;
@@ -62,7 +60,6 @@ public class CommandBuilder {
                     Bukkit.dispatchCommand(thisSender, replacer.replace(executeCommand));
                 });
             }).register(AliasManager.INSTANCE);
-        REGISTERED.add(commandName);
     }
 
     public String getCommandName() {
