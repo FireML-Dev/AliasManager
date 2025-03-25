@@ -1,14 +1,9 @@
 package uk.firedev.aliasmanager;
 
 import dev.dejvokep.boostedyaml.block.implementation.Section;
-import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.CommandTree;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.ParsingException;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import uk.firedev.aliasmanager.local.AliasManager;
@@ -17,7 +12,11 @@ import uk.firedev.daisylib.api.message.string.StringReplacer;
 
 import java.util.*;
 
+// TODO send a message when a command is disabled and registered
+// If a command is disabled and registered, overwrite the registered command with the message
 public class CommandBuilder {
+
+    public static final List<String> REGISTERED = new ArrayList<>();
 
     private final boolean disabled;
     private final String commandName;
@@ -60,6 +59,8 @@ public class CommandBuilder {
                     Bukkit.dispatchCommand(thisSender, replacer.replace(executeCommand));
                 });
             }).register(AliasManager.INSTANCE);
+        REGISTERED.add(commandName);
+        REGISTERED.addAll(aliases);
     }
 
     public String getCommandName() {
