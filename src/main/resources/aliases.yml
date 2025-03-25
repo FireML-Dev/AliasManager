@@ -1,4 +1,5 @@
 # NOTE: Removing any commands from this file requires a full server restart.
+# Any aliases that are disabled while the server is running will be overwritten with "This alias is disabled.".
 
 # The command name
 example:

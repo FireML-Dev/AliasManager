@@ -9,11 +9,10 @@ dependencyResolutionManagement {
             // compileOnly dependencies
 
             // implementation dependencies
-            library("daisylib", "uk.firedev:DaisyLib-API:2.3.1-SNAPSHOT")
             library("commandapi", "dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.7.0")
-            library("boostedyaml", "dev.dejvokep:boosted-yaml:1.3.7")
 
             // paperLibrary dependencies
+            library("boostedyaml", "dev.dejvokep:boosted-yaml:1.3.7")
 
             // Gradle plugins
             plugin("shadow", "com.gradleup.shadow").version("8.3.5")

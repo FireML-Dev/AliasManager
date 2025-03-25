@@ -4,14 +4,11 @@ import dev.jorel.commandapi.CommandTree;
 import org.jetbrains.annotations.NotNull;
 import uk.firedev.aliasmanager.local.AliasManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAliases {
 
     public static final CustomAliases INSTANCE = new CustomAliases();
-
-    public static final List<CommandBuilder> COMMAND_BUILDERS = new ArrayList<>();
 
     private CustomAliases() {}
 

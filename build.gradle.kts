@@ -17,7 +17,6 @@ repositories {
 dependencies {
     compileOnly(libs.paper.api)
     implementation(libs.commandapi)
-    implementation(libs.daisylib)
 
     paperLibrary(libs.boostedyaml)
 }
