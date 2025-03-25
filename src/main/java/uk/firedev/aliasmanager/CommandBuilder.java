@@ -48,7 +48,7 @@ public class CommandBuilder {
             }).register(AliasManager.INSTANCE);
         addToRegistered();
     }
-    
+
     private void addToRegistered() {
         if (!REGISTERED.contains(commandName)) {
             REGISTERED.add(commandName);

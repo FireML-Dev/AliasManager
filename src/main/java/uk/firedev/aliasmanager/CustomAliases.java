@@ -27,7 +27,7 @@ public class CustomAliases {
         List<CommandBuilder> builders = AliasConfig.INSTANCE.getCommandBuilders();
 
         // Check every configured builder
-        for (CommandBuilder builder : builders) {
+        builders.forEach(builder -> {
             String name = builder.getCommandName();
             if (name == null || name.isEmpty()) {
                 return;
@@ -40,7 +40,14 @@ public class CustomAliases {
             }
             // Register the command
             builder.registerCommand();
-        }
+        });
+
+        // Overwrite any commands that are no longer in the config file
+        oldCommands.forEach(alias -> {
+            if (!CommandBuilder.REGISTERED.contains(alias)) {
+                registerAliasDisabled(alias);
+            }
+        });
     }
 
     private void checkAlias(@NotNull String alias, @NotNull List<String> oldCommands) {
