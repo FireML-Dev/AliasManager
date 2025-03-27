@@ -23,7 +23,7 @@ dependencies {
 
 group = "uk.firedev"
 version = "1.0-SNAPSHOT"
-description = "Template Plugin"
+description = "A simple plugin that allows you to create command aliases"
 java.sourceCompatibility = JavaVersion.VERSION_21
 
 paper {
